@@ -1,16 +1,18 @@
-package expression;
+package expression.exceptions;
+
+import expression.CheckedExpressionEl;
 
 import java.util.Objects;
 
-abstract public class AbstractBinOperation implements ExpressionEl {
-    protected final ExpressionEl exp1;
-    protected final ExpressionEl exp2;
+abstract class AbstractCheckedBinOperation implements CheckedExpressionEl  {
+    protected final CheckedExpressionEl exp1;
+    protected final CheckedExpressionEl exp2;
     protected int operationPriority;
     protected boolean associativeFirst;
     protected boolean associativeSecond;
     protected boolean associativeWithSimilar;
 
-    public AbstractBinOperation(ExpressionEl exp1, ExpressionEl exp2,
+    public AbstractCheckedBinOperation(CheckedExpressionEl exp1, CheckedExpressionEl exp2,
                                 int operationPriority,
                                 boolean associativeFirst, boolean associativeSecond, boolean associativeWithSimilar) {
         this.exp1 = exp1;
@@ -51,9 +53,9 @@ abstract public class AbstractBinOperation implements ExpressionEl {
         }
         if((operationPriority2 < operationPriority) ||
                 (operationPriority2 == operationPriority) &&
-                (!getAssociativeSecond() ||
-                        exp2 instanceof AbstractBinOperation &&
-                                !((AbstractBinOperation) exp2).getAssociativeFirst())) {
+                        (!getAssociativeSecond() ||
+                                exp2 instanceof AbstractCheckedBinOperation &&
+                                        !((AbstractCheckedBinOperation) exp2).getAssociativeFirst())) {
             miniString2 = "(" + miniString2 + ")";
         }
         return miniString1 + " " + c + " " + miniString2;
@@ -63,10 +65,8 @@ abstract public class AbstractBinOperation implements ExpressionEl {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AbstractBinOperation that = (AbstractBinOperation) o;
-        return operationPriority == that.operationPriority && associativeFirst == that.associativeFirst &&
-                associativeSecond == that.associativeSecond && associativeWithSimilar == that.associativeWithSimilar &&
-                exp1.equals(that.exp1) && exp2.equals(that.exp2);
+        AbstractCheckedBinOperation that = (AbstractCheckedBinOperation) o;
+        return operationPriority == that.operationPriority && associativeFirst == that.associativeFirst && associativeSecond == that.associativeSecond && associativeWithSimilar == that.associativeWithSimilar && Objects.equals(exp1, that.exp1) && Objects.equals(exp2, that.exp2);
     }
 
     @Override

@@ -1,11 +1,13 @@
-package expression;
+package expression.exceptions;
+
+import expression.CheckedExpressionEl;
 
 import java.util.Objects;
 
-abstract public class AbstractUnaryOperation implements ExpressionEl {
-    protected final ExpressionEl exp;
+abstract public class AbstractCheckedUnaryOperation implements CheckedExpressionEl {
+    protected final CheckedExpressionEl exp;
 
-    public AbstractUnaryOperation(ExpressionEl exp) {
+    public AbstractCheckedUnaryOperation(CheckedExpressionEl exp) {
         this.exp = exp;
     }
 
@@ -30,7 +32,7 @@ abstract public class AbstractUnaryOperation implements ExpressionEl {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AbstractUnaryOperation that = (AbstractUnaryOperation) o;
+        AbstractCheckedUnaryOperation that = (AbstractCheckedUnaryOperation) o;
         return exp.equals(that.exp);
     }
 
